@@ -28,7 +28,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyVersion("0.4.0.0")]
+[assembly: AssemblyVersion("0.4.0.31337")]
 [assembly: AssemblyTitle ("Mono.WebServer2")]
 [assembly: AssemblyDescription ("Classes for embedding an ASP.NET server in your application .NET 4.0.")]
 [assembly: AssemblyCopyright ("(c) 2002-2011 Novell, Inc.")]

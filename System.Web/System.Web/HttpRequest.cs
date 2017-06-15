@@ -1969,14 +1969,23 @@ namespace System.Web
 
 			return false;
 		}
-		
+
+		static object _GetLocalHostAddressLock = new object();
+		static System.Net.IPAddress[] _LocalHostAddress = null;
+
 		static System.Net.IPAddress [] GetLocalHostAddresses ()
 		{
+			lock (_GetLocalHostAddressLock)
+				if (_LocalHostAddress != null)
+					return _LocalHostAddress;
+			
 			try {
 				string hostName = System.Net.Dns.GetHostName ();
 				System.Net.IPAddress [] ipaddr = System.Net.Dns.GetHostAddresses (hostName);
+				lock (_LocalHostAddress) _LocalHostAddress = ipaddr;
 				return ipaddr;
 			} catch {
+				lock (_LocalHostAddress) _LocalHostAddress = new System.Net.IPAddress[0];
 				return new System.Net.IPAddress[0];
 			}
 		}

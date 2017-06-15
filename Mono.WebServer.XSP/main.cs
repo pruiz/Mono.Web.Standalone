@@ -162,6 +162,39 @@ namespace Mono.WebServer.XSP
 
 			VPathToHost vh = server.GetSingleApp ();
 			if (root && vh != null) {
+				var assemblies = new[] {
+					Assembly.GetExecutingAssembly(),
+					typeof(WebSource).Assembly,
+					typeof(System.Configuration.Configuration).Assembly,
+					typeof(System.Web.HttpApplication).Assembly
+				};
+				var bindir = Path.Combine(vh.realPath, "bin");
+				Directory.CreateDirectory(bindir);
+
+				foreach (var assembly in assemblies)
+				{
+					var srcPath = assembly.Location;
+					var srcName = Path.GetFileName(srcPath);
+					var dstPath = Path.Combine(bindir, srcName);
+
+					if (!File.Exists(dstPath)) 
+						File.Copy(srcPath, dstPath);
+
+					srcPath = Path.Combine(assembly.Location, ".mdb");
+					srcName = Path.GetFileName(srcPath);
+					dstPath = Path.Combine(bindir, srcName);
+
+					if (File.Exists(srcPath) && !File.Exists(dstPath))
+						File.Copy(srcPath, dstPath);
+
+					srcPath = assembly.Location.Replace(".dll", ".pdb").Replace(".exe", ".pdb");
+					srcName = Path.GetFileName(srcPath);
+					dstPath = Path.Combine(bindir, srcName);
+
+					if (File.Exists(srcPath) && !File.Exists(dstPath))
+						File.Copy(srcPath, dstPath);
+				}
+
 				// Redo in new domain
 				vh.CreateHost (server, webSource);
 				var svr = (Server) vh.AppHost.Domain.CreateInstanceAndUnwrap (GetType ().Assembly.GetName ().ToString (), GetType ().FullName);

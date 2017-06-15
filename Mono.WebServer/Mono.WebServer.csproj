@@ -11,6 +11,7 @@
     <AssemblyName>Mono.WebServer</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\mono.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,8 +56,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Configuration" />
     <Reference Include="Mono.Posix" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -118,5 +117,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Options\Settings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.Configuration\System.Configuration.csproj">
+      <Project>{D5CDC09C-F19A-4811-A6C8-70F51CBFB644}</Project>
+      <Name>System.Configuration</Name>
+      <IncludeInPackage>false</IncludeInPackage>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Web\System.Web.csproj">
+      <Project>{9DB806CB-B828-49B7-BAE2-2E52402CB4DC}</Project>
+      <Name>System.Web</Name>
+      <IncludeInPackage>false</IncludeInPackage>
+    </ProjectReference>
   </ItemGroup>
 </Project>
