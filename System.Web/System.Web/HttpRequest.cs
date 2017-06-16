@@ -1982,10 +1982,10 @@ namespace System.Web
 			try {
 				string hostName = System.Net.Dns.GetHostName ();
 				System.Net.IPAddress [] ipaddr = System.Net.Dns.GetHostAddresses (hostName);
-				lock (_LocalHostAddress) _LocalHostAddress = ipaddr;
+				lock (_GetLocalHostAddressLock) _LocalHostAddress = ipaddr;
 				return ipaddr;
 			} catch {
-				lock (_LocalHostAddress) _LocalHostAddress = new System.Net.IPAddress[0];
+				lock (_GetLocalHostAddressLock) _LocalHostAddress = new System.Net.IPAddress[0];
 				return new System.Net.IPAddress[0];
 			}
 		}
